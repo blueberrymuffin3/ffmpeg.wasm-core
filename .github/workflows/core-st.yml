@@ -15,52 +15,52 @@ env:
   # EM_CACHE_FOLDER: 'emsdk-cache'
 
 jobs:
-  build-libs:
-    strategy:
-      max-parallel: 1
-      matrix:
-        script:
-          - build-zlib
-          - build-x264
-          - build-x265
-          - build-libvpx
-          - build-wavpack
-          - build-lame
-          - build-fdk-aac
-          - build-ogg
-          - build-vorbis
-          - build-theora
-          - build-opus
-          - build-libwebp
-          - build-freetype2
-          - build-fribidi
-          - build-harfbuzz
-          - build-libass
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-      - name: Get commit hash
-        id: get-commit-hash
-        run: |
-          echo "::set-output name=hash::$(git rev-parse --short HEAD)"
-      - name: Cache libs
-        uses: actions/cache@v2
-        with:
-          path: |
-            build
-            wasm/cache
-          key: ${{ env.CACHE_KEY_PREFIX }}-${{ steps.get-commit-hash.outputs.hash }}-${{ matrix.script }}
-          restore-keys: |
-            ${{ env.CACHE_KEY_PREFIX }}-${{ steps.get-commit-hash.outputs.hash }}-
-      - name: List cached libs
-        run: ls -R build || true
-      - name: Build FFMpeg Libs
-        run: bash build-with-docker.sh install-deps ${{ matrix.script }}
+  # build-libs:
+  #   strategy:
+  #     max-parallel: 1
+  #     matrix:
+  #       script:
+  #         - build-zlib
+  #         - build-x264
+  #         - build-x265
+  #         - build-libvpx
+  #         - build-wavpack
+  #         - build-lame
+  #         - build-fdk-aac
+  #         - build-ogg
+  #         - build-vorbis
+  #         - build-theora
+  #         - build-opus
+  #         - build-libwebp
+  #         - build-freetype2
+  #         - build-fribidi
+  #         - build-harfbuzz
+  #         - build-libass
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         submodules: recursive
+  #     - name: Get commit hash
+  #       id: get-commit-hash
+  #       run: |
+  #         echo "::set-output name=hash::$(git rev-parse --short HEAD)"
+  #     - name: Cache libs
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           build
+  #           wasm/cache
+  #         key: ${{ env.CACHE_KEY_PREFIX }}-${{ steps.get-commit-hash.outputs.hash }}-${{ matrix.script }}
+  #         restore-keys: |
+  #           ${{ env.CACHE_KEY_PREFIX }}-${{ steps.get-commit-hash.outputs.hash }}-
+  #     - name: List cached libs
+  #       run: ls -R build || true
+  #     - name: Build FFMpeg Libs
+  #       run: bash build-with-docker.sh install-deps ${{ matrix.script }}
   build-ffmpeg:
     runs-on: ubuntu-latest
-    needs: build-libs
+    # needs: build-libs
     steps:
       - uses: actions/checkout@v2
         with:
