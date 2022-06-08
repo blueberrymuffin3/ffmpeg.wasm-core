@@ -1,5 +1,5 @@
 {
-  "name": "@ffmpeg/core-st",
+  "name": "@blueberrymuffin3/ffmpeg-core-st",
   "version": "0.10.0",
   "description": "ffmpeg.wasm core (single thread)",
   "main": "dist/ffmpeg-core.js",
