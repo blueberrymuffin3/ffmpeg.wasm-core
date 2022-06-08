@@ -52,16 +52,16 @@ jobs:
           name: ffmpeg-core
           path: ${{ env.DIST_PATH }}
       - uses: actions/setup-node@v3
-        if: ${{ startsWith(github.event.push.ref, 'refs/tags/v') }}
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@blueberrymuffin3'
       - run: npm ci
-        if: ${{ startsWith(github.event.push.ref, 'refs/tags/v') }}
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         working-directory: ${{ env.PUBLISH_PATH }}
       - run: npm publish --access public
-        if: ${{ startsWith(github.event.push.ref, 'refs/tags/v') }}
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         working-directory: ${{ env.PUBLISH_PATH }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
