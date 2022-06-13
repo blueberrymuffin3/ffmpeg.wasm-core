@@ -3,9 +3,10 @@ name: FFmpeg.wasm
 # events but only for the master branch
 on:
   push:
-    branches: [ n4.3.1-wasm ]
-  pull_request:
-    branches: [ n4.3.1-wasm ]
+    branches: 
+      - n4.3.1-wasm
+    tags:
+      - v*
 
 env:
   PUBLISH_PATH: wasm/packages/core
@@ -30,16 +31,16 @@ jobs:
           name: ffmpeg-core
           path: wasm/dist
       - uses: actions/setup-node@v3
-        if: ${{ startsWith(github.event.push.ref, 'refs/tags/npm-v') }}
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@blueberrymuffin3'
       - run: npm ci
-        if: ${{ startsWith(github.event.push.ref, 'refs/tags/npm-v') }}
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         working-directory: ${{ env.PUBLISH_PATH }}
       - run: npm publish --access public
-        if: ${{ startsWith(github.event.push.ref, 'refs/tags/npm-v') }}
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         working-directory: ${{ env.PUBLISH_PATH }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
