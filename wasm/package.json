@@ -1,6 +1,6 @@
 {
-  "name": "@ffmpeg/core",
-  "version": "0.10.0",
+  "name": "@blueberrymuffin3/ffmpeg-core",
+  "version": "0.11.1",
   "description": "ffmpeg.wasm core",
   "main": "dist/ffmpeg-core.js",
   "scripts": {
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ffmpegwasm/FFmpeg.git"
+    "url": "https://github.com/blueberrymuffin3/ffmpeg.wasm-core.git"
   },
   "keywords": [
     "ffmpeg",
