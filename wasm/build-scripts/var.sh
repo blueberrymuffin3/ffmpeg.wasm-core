@@ -7,10 +7,10 @@ set -euo pipefail
 # Include llvm binaries
 export PATH=$PATH:$EMSDK/upstream/bin
 
-# Flags for code optimization, focus on speed instead
-# of size
+# Flags for code optimization, focus on size instead
+# of speed
 OPTIM_FLAGS=(
-  -O3
+  -Os
 )
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
