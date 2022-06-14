@@ -9,7 +9,7 @@ on:
       - v*
 
 env:
-  PUBLISH_PATH: wasm/packages/core
+  PUBLISH_PATH: wasm
   EM_VERSION: 2.0.8
   EM_CACHE_FOLDER: 'emsdk-cache'
 
