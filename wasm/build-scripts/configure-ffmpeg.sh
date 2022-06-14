@@ -6,8 +6,9 @@ source $(dirname $0)/var.sh
 FLAGS=(
   "${FFMPEG_CONFIG_FLAGS_BASE[@]}"
   --disable-everything
+  --enable-parser=h264
   --enable-protocol=file
-  --enable-demuxer=mkv
+  --enable-demuxer=matroska
   --enable-demuxer=avi
   --enable-demuxer=flv
   --enable-muxer=mp4
