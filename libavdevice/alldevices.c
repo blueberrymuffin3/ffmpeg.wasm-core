@@ -44,6 +44,7 @@ extern AVInputFormat  ff_openal_demuxer;
 extern AVOutputFormat ff_opengl_muxer;
 extern AVInputFormat  ff_oss_demuxer;
 extern AVOutputFormat ff_oss_muxer;
+extern AVOutputFormat ff_pixi_muxer;
 extern AVInputFormat  ff_pulse_demuxer;
 extern AVOutputFormat ff_pulse_muxer;
 extern AVOutputFormat ff_sdl2_muxer;

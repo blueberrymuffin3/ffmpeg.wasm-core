@@ -1,0 +1,9 @@
+tasks:
+  - init: >
+      sudo install-packages bear &&
+      ./configure --disable-x86asm --disable-everything --enable-parser=h264 --enable-protocol=file --enable-demuxer=matroska --enable-demuxer=avi --enable-demuxer=flv --enable-muxer=mp4 --enable-decoder=h264 --enable-decoder=mpeg4 --enable-encoder=rawvideo --enable-filter=scale --enable-outdev=pixi &&
+      bear make -Bj 16
+
+vscode:
+  extensions:
+    - llvm-vs-code-extensions.vscode-clangd
