@@ -38,7 +38,7 @@ static int pixi_write_header(AVFormatContext *s) {
         window["PIXI_STREAM"]["width"] = $0;
         window["PIXI_STREAM"]["height"] = $1;
         window["PIXI_STREAM"]["data"] = null;
-        window["PIXI_STREAM"]["ptsNextMs"] = null;
+        window["PIXI_STREAM"]["ptsMs"] = null;
         let index = $2 / 4;
         window["PIXI_STREAM"]["timeMs"] = HEAP32.subarray(index, index + 1);
       },
@@ -83,9 +83,9 @@ static int pixi_write_packet(AVFormatContext *s, AVPacket *pkt) {
   MAIN_THREAD_ASYNC_EM_ASM(
       {
         window["PIXI_STREAM"]["data"] = HEAPU8.subarray($0, $0 + $1);
-        window["PIXI_STREAM"]["ptsNextMs"] = $2;
+        window["PIXI_STREAM"]["ptsMs"] = $2;
       },
-      pkt->data, pkt->size, ptsNextMs);
+      pkt->data, pkt->size, ptsMs);
 
   atomic_store(&c->timeMs, 0);
 
