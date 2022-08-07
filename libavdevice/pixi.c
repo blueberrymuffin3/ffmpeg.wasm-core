@@ -89,14 +89,14 @@ static int pixi_write_packet(AVFormatContext *s, AVPacket *pkt) {
 
   atomic_store(&c->timeMs, 0);
 
-  av_log(s, AV_LOG_INFO, "Sent frame (pts: %d ms)\n", ptsMs);
+  av_log(s, AV_LOG_DEBUG, "Sent frame (pts: %d ms)\n", ptsMs);
 
   // TODO: See if you can use Atomics.wait to make this better
   while (atomic_load(&c->timeMs) == 0) {
     usleep(1000);
   }
 
-  av_log(s, AV_LOG_INFO, "Frame recieved\n");
+  av_log(s, AV_LOG_DEBUG, "Frame recieved\n");
 
   return 0;
 }
