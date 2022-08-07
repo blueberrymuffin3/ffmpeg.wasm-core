@@ -55,8 +55,8 @@ static int pixi_write_header(AVFormatContext *s) {
     return AVERROR(EINVAL);
   }
 
-  if (encctx->format != AV_PIX_FMT_RGB24) {
-    av_log(s, AV_LOG_ERROR, "Unsupported pixel format '%s', choose rgb24\n",
+  if (encctx->format != AV_PIX_FMT_RGBA) {
+    av_log(s, AV_LOG_ERROR, "Unsupported pixel format '%s', choose rgba\n",
            av_get_pix_fmt_name(encctx->format));
     return AVERROR(EINVAL);
   }
