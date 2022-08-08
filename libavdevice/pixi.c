@@ -18,6 +18,7 @@ typedef struct PIXIContext {
 
 #define AV_TIME_BASE_MS                                                        \
   (AVRational) { 1, 1000 }
+#define MAX_DROPPED_FRAMES 10
 
 static int pixi_write_trailer(AVFormatContext *s) {
   PIXIContext *c = s->priv_data;
@@ -76,12 +77,12 @@ static int pixi_write_packet(AVFormatContext *s, AVPacket *pkt) {
   int32_t ptsNextMs =
       av_rescale_q(pkt->pts + pkt->duration, c->st->time_base, AV_TIME_BASE_MS);
 
-  if (timeMs > ptsNextMs) {
+  if (timeMs > ptsNextMs && c->droppedFrames < MAX_DROPPED_FRAMES) {
     c->droppedFrames++;
     c->droppedFramesTotal++;
     return 0;
   }
-  
+
   if (c->droppedFrames > 0) {
     av_log(s, AV_LOG_WARNING,
            "Playback lagging, dropped %u frames (%u total)\n", c->droppedFrames,
