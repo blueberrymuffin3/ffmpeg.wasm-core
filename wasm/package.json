@@ -1,6 +1,6 @@
 {
   "name": "@blueberrymuffin3/ffmpeg-core",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "ffmpeg.wasm core",
   "main": "dist/ffmpeg-core.js",
   "scripts": {
