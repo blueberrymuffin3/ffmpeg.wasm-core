@@ -3,15 +3,17 @@
 #include "libavutil/opt.h"
 #include "libavutil/pixdesc.h"
 #include <emscripten.h>
-#include <unistd.h>
 #include <stdatomic.h>
 #include <stdint.h>
+#include <unistd.h>
 
 typedef struct PIXIContext {
   AVClass *class;
   AVFormatContext *ctx;
   AVStream *st;
   _Atomic int32_t timeMs;
+  uint32_t droppedFrames;
+  uint32_t droppedFramesTotal;
 } PIXIContext;
 
 #define AV_TIME_BASE_MS                                                        \
@@ -75,9 +77,16 @@ static int pixi_write_packet(AVFormatContext *s, AVPacket *pkt) {
       av_rescale_q(pkt->pts + pkt->duration, c->st->time_base, AV_TIME_BASE_MS);
 
   if (timeMs > ptsNextMs) {
-    av_log(s, AV_LOG_WARNING, "Playback lagging, %u ms behind\n",
-           timeMs - ptsNextMs);
+    c->droppedFrames++;
+    c->droppedFramesTotal++;
     return 0;
+  }
+  
+  if (c->droppedFrames > 0) {
+    av_log(s, AV_LOG_WARNING,
+           "Playback lagging, dropped %u frames (%u total)\n", c->droppedFrames,
+           c->droppedFramesTotal);
+    c->droppedFrames = 0;
   }
 
   MAIN_THREAD_ASYNC_EM_ASM(
